@@ -1,5 +1,6 @@
 import 'package:do_to_app/register.dart';
 import 'package:do_to_app/refactor/widgets.dart';
+import 'package:do_to_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,7 +42,12 @@ class Splash extends StatelessWidget {
           ),
              60.verticalSpace,
           Button(
-            actionOfButton: ()=>navigate(context),
+            actionOfButton:(){
+              Navigator.pushNamed(
+                context, 
+                RoutesNames.registerScreen
+                );},
+            // / ()=>navigate(context),
              buttonTitle: 'Get Started'
              ),
             ],

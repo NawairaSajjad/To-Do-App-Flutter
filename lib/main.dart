@@ -2,6 +2,8 @@ import 'package:do_to_app/home.dart';
 import 'package:do_to_app/refactor/constants.dart';
 import 'package:do_to_app/login.dart';
 import 'package:do_to_app/register.dart';
+import 'package:do_to_app/routes/route_name.dart';
+import 'package:do_to_app/routes/routes.dart';
 import 'package:do_to_app/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,8 +23,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'To do App',
          theme: ThemeData(canvasColor: Colors.grey.shade400 ),
-         home: Splash(),
-      ),
+        //  home: Splash(),
+      initialRoute: RoutesNames.splashScreen,
+   onGenerateRoute: Routes.generateRoute,
+             ),
     );
   }
 }
