@@ -51,7 +51,7 @@ class _RegisterState extends State<Register> {
                textController:nameController,
                 validate:(value){
                   if(value == null || value.isEmpty){
-                    return 'please enter email';
+                    return 'please enter full name';
                     }}
                ),
               10.verticalSpace,
@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
                  textController: passwordController,
                   validate:(value){
                   if(value == null || value.isEmpty){
-                    return 'please enter email';
+                    return 'please enter password';
                     }}),
               10.verticalSpace,
               MyTextField(
@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
                  textController: confirmController,
                   validate:(value){
                   if(value == null || value.isEmpty){
-                    return 'please enter email';
+                    return 'password does not matched';
                     }}),
               25.verticalSpace,
               Button(actionOfButton: (){
