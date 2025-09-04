@@ -4,6 +4,7 @@ import 'package:do_to_app/refactor/refactor.dart';
 import 'package:do_to_app/refactor/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+ import 'package:shared_preferences/shared_preferences.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -83,17 +84,51 @@ class _RegisterState extends State<Register> {
                     return 'password does not matched';
                     }}),
               25.verticalSpace,
-              Button(actionOfButton: (){
-                if(_formKey.currentState!.validate()){
+             
+
+Button(
+  actionOfButton: () async {
+    if (_formKey.currentState!.validate()) {
+      if (passwordController.text == confirmController.text) {
+        // SharedPreferences instance
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        // Save user data
+        await prefs.setString('name', nameController.text);
+        await prefs.setString('email', emailController.text);
+        await prefs.setString('password', passwordController.text);
+
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration Successful!'))
+        );
+
+        Navigator.push(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Passwords do not match')),
+        );
+      }
+    }
+  },
+  buttonTitle: 'Register',
+),
+
+              // Button(actionOfButton: (){
+              //   if(_formKey.currentState!.validate()){
                   
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(
-                    builder: (context)=>Login()
-                    )
-                    ); 
+              //   Navigator.push(
+              //     context,
+              //      MaterialPageRoute(
+              //       builder: (context)=>Login()
+              //       )
+              //       ); 
             
-              }}, buttonTitle: 'Register'),
+              // }}, buttonTitle: 'Register'),
               6.verticalSpace,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

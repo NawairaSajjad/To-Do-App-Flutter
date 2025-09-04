@@ -2,9 +2,10 @@ import 'package:do_to_app/home.dart';
 import 'package:do_to_app/refactor/constants.dart';
 import 'package:do_to_app/refactor/refactor.dart';
 import 'package:do_to_app/refactor/widgets.dart';
+import 'package:do_to_app/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+ import 'package:shared_preferences/shared_preferences.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -15,20 +16,42 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   
- 
- void performLogin(){
-   if(_formKey.currentState!.validate()){
-                // if(emailController.text == 'nawaira'){
-                    Navigator.push(
-                      context,
-                       MaterialPageRoute(
-                        builder: (context)
-                        =>Home()
-                        )
-                        );
-                        // }
-               }
- }
+
+
+void performLogin() async {
+  if (_formKey.currentState!.validate()) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? savedEmail = prefs.getString('email');
+    String? savedPassword = prefs.getString('password');
+
+    if (emailController.text == savedEmail &&
+        passwordController.text == savedPassword) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid email or password')),
+      );
+    }
+  }
+}
+
+//  void performLogin(){
+//    if(_formKey.currentState!.validate()){
+//                 // if(emailController.text == 'nawaira'){
+//                     Navigator.push(
+//                       context,
+//                        MaterialPageRoute(
+//                         builder: (context)
+//                         =>Home()
+//                         )
+//                         );
+//                         // }
+//                }
+//  }
     TextEditingController emailController = TextEditingController();
       TextEditingController passwordController = TextEditingController();
       final _formKey = GlobalKey<FormState>();
@@ -84,10 +107,16 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Dont have an account?'),
-                  Text('Sign Up',
-                  style: TextStyle(
-                    color: cyanColor
-                  ),)
+                  InkWell(
+                    onTap: () {
+                      // RoutesNames.loginScreen;
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                    },
+                    child: Text('Sign Up',
+                    style: TextStyle(
+                      color: cyanColor
+                    ),),
+                  ),        
                 ],
               )
             ],),
